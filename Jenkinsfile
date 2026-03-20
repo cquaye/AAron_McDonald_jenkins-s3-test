@@ -2,109 +2,59 @@ pipeline {
     agent any
    
     environment {
-        AWS_REGION = 'us-west-2' 
+        AWS_DEFAULT_REGION = 'us-west-2'
     }
+
     stages {
-        stage('Set AWS Credentials') {
+
+        stage('Verify AWS Identity') {
             steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'AWS_SECRET_ACCESS_KEY' 
-                ]]) {
-                    sh '''
-                    echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
-                    aws sts get-caller-identity
-                    '''
-                }
-            }
-        }
-        stage('Checkout Code') {
-            steps {
-                git branch: 'main', url: 'https://github.com/cquaye/AAron_McDonald_jenkins-s3-test' 
+                sh '''
+                echo "Verifying IAM Role authentication..."
+                aws sts get-caller-identity
+                '''
             }
         }
 
-        // stage('Testing') {
-        //     // withEnv(["JFROG_BINARY_PATH=${tool 'jfrog-cli'}"]) {
-        //     // // The 'jf' tool is available in this scope.
-        //     // }
-        //     steps {
-        //         withCredentials([string(credentialsId: 'jfrog-creds', variable: 'JFROG_TOKEN')]) {
-        //             // Show the installed version of JFrog CLI
-        //             jf '-v'
-                    
-        //             // Show the configured JFrog Platform instances
-        //             jf 'c show'
-                    
-        //             // Ping Artifactory
-        //             jf 'rt ping'
-                    
-        //             // Create a file and upload it to the repository
-        //             sh 'touch test-file'
-        //             // Fixed upload command syntax
-        //             sh 'jf rt upload test-file tf-terraform/ --url=https://trial7zoppg.jfrog.io/artifactory/ --user=mcdonald.dm.aaron@gmail.com --password=$JFROG_TOKEN'
-                    
-        //             // Publish the build-info to Artifactory
-        //             jf 'rt bp'
-                    
-        //             // Fixed download command syntax
-        //             sh 'jf rt download tf-terraform/test-file --url=https://trial7zoppg.jfrog.io/artifactory/ --user=mcdonald.dm.aaron@gmail.com --password=$JFROG_TOKEN'
-        //         }
-        //     } 
-        // }
-    
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/cquaye/AAron_McDonald_jenkins-s3-test'
+            }
+        }
+
         stage('Initialize Terraform') {
             steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'AWS_SECRET_ACCESS_KEY'
-                ]]) {
-                    sh '''
-                    export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-                    export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-                    terraform init
-                    '''
-                }
+                sh 'terraform init'
             }
         }
 
         stage('Plan Terraform') {
             steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'AWS_SECRET_ACCESS_KEY'
-                ]]) {
-                    sh '''
-                    export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-                    export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-                    terraform plan -out=tfplan
-                    '''
-                }
+                sh 'terraform plan -out=tfplan'
             }
         }
+
         stage('Apply Terraform') {
             steps {
                 input message: "Approve Terraform Apply?", ok: "Deploy"
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'AWS_SECRET_ACCESS_KEY'
-                ]]) {
-                    sh '''
-                    export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-                    export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-                    terraform apply -auto-approve tfplan
-                    '''
-                }
+                sh 'terraform apply -auto-approve tfplan'
+            }
+        }
+
+        stage('Destroy Terraform') {
+            steps {
+                input message: " Confirm DESTROY of all resources?", ok: "Destroy"
+                sh 'terraform destroy -auto-approve'
             }
         }
     }
     
     post {
         success {
-            echo 'Terraform deployment completed successfully!'
+            echo 'Terraform process completed successfully!'
         }
         failure {
-            echo 'Terraform deployment failed!'
+            echo 'Terraform process failed!'
         }
     }
 }
