@@ -15,26 +15,26 @@ resource "aws_s3_object" "file1" {
   source = "Theo_approval.PNG"
 }
 
-resource "aws_s3_object" "file1" {
+resource "aws_s3_object" "file2" {
   bucket = aws_s3_bucket.frontend.id
   key = "jenkins1.PNG"
   source = "jenkins_deploy1.PNG"
 }
 
-resource "aws_s3_object" "file1" {
+resource "aws_s3_object" "file3" {
   bucket = aws_s3_bucket.frontend.id
   key = "jenkins2.PNG"
   source = "jenkins_deploy2.PNG"
 }
 
-resource "aws_s3_object" "file1" {
+resource "aws_s3_object" "file4" {
   bucket = aws_s3_bucket.frontend.id
   key = "jenkins3.PNG"
   source = "jenkins_deploy3.PNG"
 }
 
 
-resource "aws_s3_object" "file1" {
+resource "aws_s3_object" "file5" {
   bucket = aws_s3_bucket.frontend.id
   key = "webhook.PNG"
   source = "webhook.PNG"
