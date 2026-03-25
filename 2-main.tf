@@ -39,3 +39,9 @@ resource "aws_s3_object" "file5" {
   key = "webhook.PNG"
   source = "webhook.PNG"
 }
+
+resource "aws_s3_object" "file6" {
+  bucket = aws_s3_bucket.frontend.id
+  key = "armageddon_proof.PNG"
+  source = "armageddon_proof.PNG"
+}
