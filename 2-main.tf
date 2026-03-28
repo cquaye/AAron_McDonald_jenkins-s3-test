@@ -22,28 +22,29 @@ resource "aws_s3_bucket_public_access_block" "s3_permissions" {
 
 
 #---create s3 bucket policy---# 
-resource "aws_s3_bucket_policy" "s3_policy" {
-  bucket = aws_s3_bucket.frontend.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Effect = "Allow"
-      Principal = "*"
-      Action = "s3:GetObject"
-      Resource = "${aws_s3_bucket.frontend.arn}/*"
+# resource "aws_s3_bucket_policy" "s3_policy" {
+#   bucket = aws_s3_bucket.frontend.id
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [{
+#       Effect = "Allow"
+#       Principal = "*"
+#       Action = "s3:GetObject"
+#       Resource = "${aws_s3_bucket.frontend.arn}/*"
 
 
-    }
-    ]
-  })
+#     }
+#     ]
+#   })
   
-}
+# }
 
 resource "aws_s3_object" "file1" {
   bucket = aws_s3_bucket.frontend.id
   key    = "approval.PNG"
   source = "Theo_approval.PNG"
   content_type = "image/png"
+  acl = "public-read"
   
 }
 
