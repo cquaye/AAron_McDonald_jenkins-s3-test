@@ -33,12 +33,13 @@ resource "aws_s3_bucket_versioning" "s3_versioning" {
 #---create s3 bucket policy---# 
 resource "aws_s3_bucket_policy" "s3_policy" {
   bucket = aws_s3_bucket.frontend.id
-  policy = jsondecode({
+  policy = jsonecode({
     Version = "2012-10-17"
     Statement = [{
       Effect = "Allow"
       Principal = {
-        "AWS"= "arn:aws:iam::33388895010:root"}
+        "AWS"= "arn:aws:iam::33388895010:root"
+        }
       Action = [
         "s3:GetObject",
         "s3:ListBucket"
