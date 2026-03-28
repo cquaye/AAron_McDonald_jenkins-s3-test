@@ -22,40 +22,41 @@ resource "aws_s3_bucket" "frontend" {
 
 
 #---create s3 bucket policy---# 
-resource "aws_s3_bucket_policy" "s3_policy" {
-  bucket = aws_s3_bucket.frontend.id
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [{
-      Effect = "Allow"
-      Principal = "*"
-      Action = "s3:GetObject"
-      Resource = "${aws_s3_bucket.frontend.arn}/*"
+# resource "aws_s3_bucket_policy" "s3_policy" {
+#   bucket = aws_s3_bucket.frontend.id
+#   policy = jsonencode({
+#     Version = "2012-10-17"
+#     Statement = [{
+#       Effect = "Allow"
+#       Principal = "*"
+#       Action = "s3:GetObject"
+#       Resource = "${aws_s3_bucket.frontend.arn}/*"
 
 
-    },
-    {
-      Effect = "Allow"
-      Principal = "*"
-      Action = [
-        "s3:ListBucket",
-        "s3:PutBucketPolicy",
-        "s3:GetBucketPolicy"
-        ],
-      Resource = [
-        aws_s3_bucket.frontend.arn
-        ]
-    }
-    ]
-  })
+#     },
+#     {
+#       Effect = "Allow"
+#       Principal = "*"
+#       Action = [
+#         "s3:ListBucket",
+#         "s3:PutBucketPolicy",
+#         "s3:GetBucketPolicy"
+#         ],
+#       Resource = [
+#         aws_s3_bucket.frontend.arn
+#         ]
+#     }
+#     ]
+#   })
   
-}
+# }
 
 resource "aws_s3_object" "file1" {
   bucket = aws_s3_bucket.frontend.id
   key    = "approval.PNG"
   source = "Theo_approval.PNG"
   content_type = "image/png"
+  acl = "public-read"
 }
 
 resource "aws_s3_object" "file2" {
@@ -63,6 +64,7 @@ resource "aws_s3_object" "file2" {
   key    = "jenkins1.PNG"
   source = "jenkins_deploy_1.PNG"
   content_type = "image/png"
+  acl = "public-read"
 }
 
 resource "aws_s3_object" "file3" {
@@ -70,6 +72,7 @@ resource "aws_s3_object" "file3" {
   key    = "jenkins2.PNG"
   source = "jenkins_deploy_2.PNG"
   content_type = "image/png"
+  acl = "public-read"
 }
 
 resource "aws_s3_object" "file4" {
@@ -77,6 +80,7 @@ resource "aws_s3_object" "file4" {
   key    = "jenkins3.PNG"
   source = "jenkins_deploy_3.PNG"
   content_type = "image/png"
+  acl = "public-read"
 }
 
 
@@ -85,6 +89,7 @@ resource "aws_s3_object" "file5" {
   key    = "webhook.PNG"
   source = "webhook.PNG"
   content_type = "image/png"
+  acl = "public-read"
 }
 
 resource "aws_s3_object" "file6" {
@@ -92,4 +97,5 @@ resource "aws_s3_object" "file6" {
   key    = "armageddon_proof.PNG"
   source = "armageddon_proof.PNG"
   content_type = "image/png"
+  acl = "public-read"
 }
