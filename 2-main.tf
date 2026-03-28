@@ -33,7 +33,7 @@ resource "aws_s3_bucket_versioning" "s3_versioning" {
 #---create s3 bucket policy---# 
 resource "aws_s3_bucket_policy" "s3_policy" {
   bucket = aws_s3_bucket.frontend.id
-  policy = jsonecode({
+  policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
       Effect = "Allow"
