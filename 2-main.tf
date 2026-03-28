@@ -33,7 +33,21 @@ resource "aws_s3_bucket_policy" "s3_policy" {
       Resource = "${aws_s3_bucket.frontend.arn}/*"
 
 
-    }]
+    },
+    {
+      Effect = "Allow"
+      Principal = "*"
+      Action = [
+        "s3:ListBuckets",
+        "s3:PutBucketPolicy",
+        "s3:GetBucketPolicy"
+        ],
+      Resource = [
+        aws_s3_bucket.frontend.arn,
+        "${aws_s3_bucket.frontend.arn}/*"
+        ]
+    }
+    ]
   })
   
 }
