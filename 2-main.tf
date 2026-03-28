@@ -42,24 +42,28 @@ resource "aws_s3_object" "file1" {
   bucket = aws_s3_bucket.frontend.id
   key    = "approval.PNG"
   source = "Theo_approval.PNG"
+  content_type = "image/png"
 }
 
 resource "aws_s3_object" "file2" {
   bucket = aws_s3_bucket.frontend.id
   key    = "jenkins1.PNG"
   source = "jenkins_deploy_1.PNG"
+  content_type = "image/png"
 }
 
 resource "aws_s3_object" "file3" {
   bucket = aws_s3_bucket.frontend.id
   key    = "jenkins2.PNG"
   source = "jenkins_deploy_2.PNG"
+  content_type = "image/png"
 }
 
 resource "aws_s3_object" "file4" {
   bucket = aws_s3_bucket.frontend.id
   key    = "jenkins3.PNG"
   source = "jenkins_deploy_3.PNG"
+  content_type = "image/png"
 }
 
 
@@ -67,10 +71,12 @@ resource "aws_s3_object" "file5" {
   bucket = aws_s3_bucket.frontend.id
   key    = "webhook.PNG"
   source = "webhook.PNG"
+  content_type = "image/png"
 }
 
 resource "aws_s3_object" "file6" {
   bucket = aws_s3_bucket.frontend.id
   key    = "armageddon_proof.PNG"
   source = "armageddon_proof.PNG"
+  content_type = "image/png"
 }
