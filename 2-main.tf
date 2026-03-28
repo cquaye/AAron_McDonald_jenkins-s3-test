@@ -38,13 +38,16 @@ resource "aws_s3_bucket_policy" "s3_policy" {
     Statement = [{
       Effect = "Allow"
       Principal = {
-        "AWS": "arn:aws:iam::33388895010:root"
+        "AWS": "arn:aws:iam::333888905010:root"
         }
       Action = [
         "s3:GetObject",
         "s3:ListBucket"
         ]
-      Resource = "${aws_s3_bucket.frontend.arn}/*"
+      Resource = [
+        "${aws_s3_bucket.frontend.arn}/*",
+        aws_s3_bucket.frontend.arn
+      ]
 
     }]
   })
