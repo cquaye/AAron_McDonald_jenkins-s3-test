@@ -9,16 +9,16 @@ resource "aws_s3_bucket" "frontend" {
 }
 
 
-#---permissions for public access---#    
-resource "aws_s3_bucket_public_access_block" "s3_permissions" {
-  bucket = aws_s3_bucket.frontend.id
+# #---permissions for public access---#    
+# resource "aws_s3_bucket_public_access_block" "s3_permissions" {
+#   bucket = aws_s3_bucket.frontend.id
 
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
+#   block_public_acls       = false
+#   block_public_policy     = false
+#   ignore_public_acls      = false
+#   restrict_public_buckets = false
 
-}
+# }
 
 
 #---create s3 bucket policy---# 
@@ -44,7 +44,7 @@ resource "aws_s3_object" "file1" {
   key    = "approval.PNG"
   source = "Theo_approval.PNG"
   content_type = "image/png"
-  acl = "public-read"
+
   
 }
 
