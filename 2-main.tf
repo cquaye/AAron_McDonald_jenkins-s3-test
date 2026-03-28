@@ -38,7 +38,7 @@ resource "aws_s3_bucket_policy" "s3_policy" {
     Statement = [{
       Effect = "Allow"
       Principal = {
-        "AWS": "arn:aws:iam::333888905010:root"
+        "AWS": "*"
         }
       Action = [
         "s3:GetObject",
