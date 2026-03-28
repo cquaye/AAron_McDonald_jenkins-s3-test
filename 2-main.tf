@@ -21,15 +21,6 @@ resource "aws_s3_bucket_public_access_block" "s3_permissions" {
 }
 
 
-#---versioning ---#  
-resource "aws_s3_bucket_versioning" "s3_versioning" {
-  bucket = aws_s3_bucket.frontend.id
-  versioning_configuration {
-    status = "Enabled"
-  }
-  
-}
-
 #---create s3 bucket policy---# 
 resource "aws_s3_bucket_policy" "s3_policy" {
   bucket = aws_s3_bucket.frontend.id
