@@ -43,8 +43,7 @@ resource "aws_s3_bucket_policy" "s3_policy" {
         "s3:GetBucketPolicy"
         ],
       Resource = [
-        "arn:aws:s3:::my-jenkins-bucket-20260328203929937300000001",
-        "arn:aws:s3:::my-jenkins-bucket-20260328203929937300000001/*"
+        aws_s3_bucket.frontend.arn
         ]
     }
     ]
