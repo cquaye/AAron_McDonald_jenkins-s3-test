@@ -38,7 +38,7 @@ resource "aws_s3_bucket_policy" "s3_policy" {
       Effect = "Allow"
       Principal = "*"
       Action = [
-        "s3:ListBuckets",
+        "s3:ListBucket",
         "s3:PutBucketPolicy",
         "s3:GetBucketPolicy"
         ],
