@@ -4,7 +4,7 @@ pipeline {
     environment {
         AWS_DEFAULT_REGION = 'us-west-2'
         TF_IN_AUTOMATION   = 'true'
-        SNYK_ORG           = credential('snyk-org-slug')
+        SNYK_ORG           = credentials('snyk-org-slug')
     }
 
     stages {
